@@ -2455,9 +2455,18 @@ kernel void kernel_concat(
     const int64_t i02 = tgpig.y;
     const int64_t i01 = tgpig.x;
 
+    //original
+    //const int64_t i13 = i03 % ne13;
+    //const int64_t i12 = i02 % ne12;
+    //const int64_t i11 = i01 % ne11;
+
+    //correct
     const int64_t i13 = i03 % ne13;
-    const int64_t i12 = i02 % ne12;
+    int64_t i12 = i02 % ne12;
     const int64_t i11 = i01 % ne11;
+    if (i02 >= ne02) {
+        i12 = i02 - ne02;
+    }
 
     device const char * src0_ptr = src0 + i03*nb03 + i02*nb02 + i01*nb01 + tpitg.x*nb00;
     device const char * src1_ptr = src1 + i13*nb13 + i12*nb12 + i11*nb11 + tpitg.x*nb10;
